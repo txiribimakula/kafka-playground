@@ -1,8 +1,8 @@
 <div class="container">
     TOPIC
     <div class="messages">
-        <app-message></app-message>
-        <app-message></app-message>
-        <app-message></app-message>
+        @for (message of messages(); let i =$index; track i; ){
+            <app-message></app-message>
+        }
     </div>
 </div>

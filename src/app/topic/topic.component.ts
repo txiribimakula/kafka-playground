@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MessageComponent } from "../message/message.component";
+import { KafkaService } from '../kafka.service';
 
 @Component({
     selector: 'app-topic',
@@ -9,5 +10,9 @@ import { MessageComponent } from "../message/message.component";
     imports: [MessageComponent]
 })
 export class TopicComponent {
+    messages;
 
+    constructor(kafka: KafkaService) {
+        this.messages = kafka.messages;
+    }
 }
