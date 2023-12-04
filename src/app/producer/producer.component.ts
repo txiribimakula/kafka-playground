@@ -12,6 +12,6 @@ export class ProducerComponent {
   constructor(private kafka: KafkaService) {}
 
   produce() {
-    this.kafka.produce('message');
+    this.kafka.produce(0, 'message');
   }
 }
