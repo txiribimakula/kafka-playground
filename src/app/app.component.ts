@@ -4,6 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { ConsumerComponent } from "./consumer/consumer.component";
 import { ProducerComponent } from "./producer/producer.component";
 import { TopicComponent } from "./topic/topic.component";
+import { Topic } from './topic/topic';
 
 @Component({
     selector: 'app-root',
@@ -13,5 +14,5 @@ import { TopicComponent } from "./topic/topic.component";
     imports: [CommonModule, RouterOutlet, ConsumerComponent, ProducerComponent, TopicComponent]
 })
 export class AppComponent {
-  title = 'kafka-playground';
+  topics: Topic[] = [new Topic(), new Topic(), new Topic()];
 }

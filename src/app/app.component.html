@@ -3,7 +3,9 @@
         <app-producer></app-producer>
     </div>
     <div class="topics">
-        <app-topic></app-topic>
+        @for (topic of topics; track $index) {
+            <app-topic></app-topic>
+        }
     </div>
     <div class="consumers">
         <app-consumer></app-consumer>
