@@ -1,7 +1,14 @@
 .container {
-    background-color: white;
     color: black;
     width: 50px;
     padding: 10px 0 10px 0;
     text-align: center;
+}
+
+.new {
+    background-color: white;
+}
+
+.committed {
+    background-color: beige;
 }
