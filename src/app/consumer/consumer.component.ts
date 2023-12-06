@@ -18,7 +18,7 @@ export class ConsumerComponent {
   delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
   constructor(private kafka: KafkaService) {
-    this.messages$ = toObservable(this.kafka.topics()[0].messages, {});
+    this.messages$ = toObservable(this.kafka.topics().get('one.topic')!.messages, {});
     this.subscribe();
   }
 
@@ -34,12 +34,12 @@ export class ConsumerComponent {
   async consume() {
     for (
       let index = this.offset;
-      index < this.kafka.topics()[0].messages().length;
+      index < this.kafka.topics().get('one.topic')!.messages().length;
       index++
     ) {
-      await this.handle(this.kafka.topics()[0].messages()[index]);
+      await this.handle(this.kafka.topics().get('one.topic')!.messages()[index]);
     }
-    if (this.offset < this.kafka.topics()[0].messages().length - 1) {
+    if (this.offset < this.kafka.topics().get('one.topic')!.messages().length - 1) {
       await this.consume();
     }
     this.subscribe();
@@ -47,7 +47,7 @@ export class ConsumerComponent {
 
   async handle(message: Message) {
     await this.delay(300);
-    this.kafka.commit(0, message);
+    this.kafka.commit('one.topic', message);
     this.offset++;
   }
 }

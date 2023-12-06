@@ -11,13 +11,13 @@ import { Message } from '../message/message';
     imports: [MessageComponent]
 })
 export class TopicComponent implements OnInit {
-    @Input({required: true}) index!: number;
+    @Input({required: true}) name!: string;
     messages?: Signal<Message[]>;
 
     constructor(private kafka: KafkaService) {
     }
 
     ngOnInit(): void {
-        this.messages = this.kafka.topics()[this.index].messages;
+        this.messages = this.kafka.topics().get(this.name)!.messages;
     }
 }

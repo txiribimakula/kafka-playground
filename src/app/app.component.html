@@ -3,8 +3,8 @@
         <app-producer></app-producer>
     </div>
     <div class="topics">
-        @for (topic of kafka.topics(); let i = $index; track topic;) {
-            <app-topic [index]="i"></app-topic>
+        @for (topic of kafka.topics().values(); let i = $index; track topic;) {
+            <app-topic [name]="topic.name"></app-topic>
         }
     </div>
     <div class="consumers">
