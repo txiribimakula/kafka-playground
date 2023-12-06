@@ -1,1 +1,4 @@
-<p class="producer">PRODUCER <button (click)="produce()">produce</button></p>
+<p class="producer">PRODUCER
+    <input type="text" [(ngModel)]="topic"/>
+    <button (click)="produce()">produce</button>
+</p>
