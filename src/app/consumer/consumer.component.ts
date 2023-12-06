@@ -25,7 +25,7 @@ export class ConsumerComponent implements OnInit {
 
     this.hasPendingMessages = computed(() => {
       if (this.topic) {
-        return this.topic.messages().length > this.topic.offset();
+        return this.topic.partitions()[0].messages().length > this.topic.partitions()[0].offset();
       }
       return false;
     });
@@ -41,7 +41,7 @@ export class ConsumerComponent implements OnInit {
   }
 
   consume() {
-    this.topic.messages$.subscribe((message) => {
+    this.topic.partitions()[0].messages$.subscribe((message) => {
       this.handle(message);
     });
   }

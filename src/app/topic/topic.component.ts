@@ -1,23 +1,24 @@
-import { Component, Input, OnInit, Signal, WritableSignal } from '@angular/core';
-import { MessageComponent } from "../message/message.component";
+import { Component, Input, OnInit } from '@angular/core';
+import { MessageComponent } from '../message/message.component';
+import { PartitionComponent } from './partition/partition.component';
 import { KafkaService } from '../kafka.service';
-import { Message } from '../message/message';
+import { Partition } from './partition/partition';
 
 @Component({
-    selector: 'app-topic',
-    standalone: true,
-    templateUrl: './topic.component.html',
-    styleUrl: './topic.component.scss',
-    imports: [MessageComponent]
+  selector: 'app-topic',
+  standalone: true,
+  templateUrl: './topic.component.html',
+  styleUrl: './topic.component.scss',
+  imports: [MessageComponent, PartitionComponent],
 })
 export class TopicComponent implements OnInit {
-    @Input({required: true}) name!: string;
-    messages?: Signal<Message[]>;
+  @Input({ required: true }) name!: string;
 
-    constructor(private kafka: KafkaService) {
-    }
+  partition!: Partition;
 
-    ngOnInit(): void {
-        this.messages = this.kafka.topics().get(this.name)!.messages;
-    }
+  constructor(private kafka: KafkaService) {}
+
+  ngOnInit(): void {
+    this.partition = this.kafka.topics().get(this.name)!.partitions()[0];
+  }
 }

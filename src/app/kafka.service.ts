@@ -18,8 +18,8 @@ export class KafkaService {
   produce(topicName: string, msg: string) {
     const topic = this.topics().get(topicName);
     if (topic) {
-      topic.messages.update((values) => {
-        values.push(new Message(msg, topic.messages().length));
+      topic.partitions()[0].messages.update((values) => {
+        values.push(new Message(msg, topic.partitions()[0].messages().length));
         return [...values];
       });
     } else {
@@ -29,7 +29,7 @@ export class KafkaService {
 
   commit(topicName: string, message: Message) {
     const topic = this.topics().get(topicName)!;
-    topic.messages.update((values) => {
+    topic.partitions()[0].messages.update((values) => {
       const newValues = values.map((value) => {
         if (value.offset == message.offset) {
           value.isCommitted = true;
@@ -38,6 +38,6 @@ export class KafkaService {
       });
       return newValues;
     });
-    topic.offset.set(message.offset + 1);
+    topic.partitions()[0].offset.set(message.offset + 1);
   }
 }
