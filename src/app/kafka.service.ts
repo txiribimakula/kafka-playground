@@ -19,12 +19,16 @@ export class KafkaService {
   }
 
   produce(topicName: string, msg: string) {
-    // test for topic nos existing
-    this.topics().get(topicName)!.messages.update((values) => {
-      values.push(new Message(msg, this.index));
-      this.index++;
-      return [...values];
-    });
+    const topic = this.topics().get(topicName);
+    if (topic) {
+      topic.messages.update((values) => {
+        values.push(new Message(msg, this.index));
+        this.index++;
+        return [...values];
+      });
+    } else {
+      throw new Error(`Topic ${topicName} does not exist`);
+    }
   }
 
   commit(topicName: string, message: Message) {
