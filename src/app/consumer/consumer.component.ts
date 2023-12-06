@@ -25,7 +25,6 @@ export class ConsumerComponent {
   async handle(message: Message) {
     await this.work(message);
     this.kafka.commit('one.topic', message);
-    this.consume();
   }
 
   async work(message: Message) {

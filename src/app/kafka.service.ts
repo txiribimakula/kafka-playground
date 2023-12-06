@@ -8,8 +8,6 @@ import { Topic } from './topic/topic';
 export class KafkaService {
   topics = signal<Map<string, Topic>>(new Map<string, Topic>());
 
-  index = 0;
-
   constructor() {
     var topic1 = new Topic('one.topic');
     var topic2 = new Topic('two.topic');
@@ -21,8 +19,7 @@ export class KafkaService {
     const topic = this.topics().get(topicName);
     if (topic) {
       topic.messages.update((values) => {
-        values.push(new Message(msg, this.index));
-        this.index++;
+        values.push(new Message(msg, topic.messages().length));
         return [...values];
       });
     } else {
