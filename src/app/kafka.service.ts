@@ -9,7 +9,6 @@ export class KafkaService {
   topics = signal<Map<string, Topic>>(new Map<string, Topic>());
 
   index = 0;
-  // instead of a list of messages this should be a dictionary.
 
   constructor() {
     var topic1 = new Topic('one.topic');
