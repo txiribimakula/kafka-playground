@@ -1,3 +1,9 @@
+.container {
+    background-color: grey;
+    padding: 33px;
+    text-align: center;
+}
+
 .messages {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(50px, 50px));

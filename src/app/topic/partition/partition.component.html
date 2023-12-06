@@ -1,7 +1,10 @@
-<div class="messages">
-    @if(messages){
+<div class="container">
+    Partition {{partition.index}}
+    <div class="messages">
+        @if(messages){
         @for (message of messages(); let i =$index; track i; ){
-            <app-message [message]="message"></app-message>
+        <app-message [message]="message"></app-message>
         }
-    }
+        }
+    </div>
 </div>
