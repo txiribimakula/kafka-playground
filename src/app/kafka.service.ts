@@ -32,7 +32,8 @@ export class KafkaService {
   }
 
   commit(topicName: string, message: Message) {
-    this.topics().get(topicName)!.messages.update((values) => {
+    const topic = this.topics().get(topicName)!;
+    topic.messages.update((values) => {
       const newValues = values.map((value) => {
         if (value.offset == message.offset) {
           value.isCommitted = true;
@@ -41,5 +42,6 @@ export class KafkaService {
       });
       return newValues;
     });
+    topic.offset.set(message.offset + 1);
   }
 }

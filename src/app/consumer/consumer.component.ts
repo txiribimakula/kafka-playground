@@ -12,42 +12,23 @@ import { first, take } from 'rxjs';
   styleUrl: './consumer.component.scss',
 })
 export class ConsumerComponent {
-  offset = 0;
-
-  messages$;
-  delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
-
   constructor(private kafka: KafkaService) {
-    this.messages$ = toObservable(this.kafka.topics().get('one.topic')!.messages, {});
-    this.subscribe();
+    this.consume();
   }
 
-  subscribe() {
-    this.messages$.pipe(take(2)).subscribe(async (values) => {
-      if (values.length  == this.offset) {
-        return;
-      }
-      await this.consume();
+  consume() {
+    this.kafka.topics().get('one.topic')!.messages$.subscribe((message) => {
+      this.handle(message);
     });
   }
 
-  async consume() {
-    for (
-      let index = this.offset;
-      index < this.kafka.topics().get('one.topic')!.messages().length;
-      index++
-    ) {
-      await this.handle(this.kafka.topics().get('one.topic')!.messages()[index]);
-    }
-    if (this.offset < this.kafka.topics().get('one.topic')!.messages().length - 1) {
-      await this.consume();
-    }
-    this.subscribe();
+  async handle(message: Message) {
+    await this.work(message);
+    this.kafka.commit('one.topic', message);
+    this.consume();
   }
 
-  async handle(message: Message) {
-    await this.delay(300);
-    this.kafka.commit('one.topic', message);
-    this.offset++;
+  async work(message: Message) {
+    await new Promise(_ => setTimeout(_, 1500));
   }
 }
