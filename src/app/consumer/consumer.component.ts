@@ -1,4 +1,4 @@
-import { Component, effect } from '@angular/core';
+import { Component, Input, OnInit, effect } from '@angular/core';
 import { KafkaService } from '../kafka.service';
 import { Message } from '../message/message';
 import { toObservable } from '@angular/core/rxjs-interop';
@@ -11,23 +11,30 @@ import { first, take } from 'rxjs';
   templateUrl: './consumer.component.html',
   styleUrl: './consumer.component.scss',
 })
-export class ConsumerComponent {
-  constructor(private kafka: KafkaService) {
+export class ConsumerComponent implements OnInit {
+  @Input() topicName!: string;
+
+  constructor(private kafka: KafkaService) {}
+
+  ngOnInit(): void {
     this.consume();
   }
 
   consume() {
-    this.kafka.topics().get('one.topic')!.messages$.subscribe((message) => {
-      this.handle(message);
-    });
+    this.kafka
+      .topics()
+      .get(this.topicName)!
+      .messages$.subscribe((message) => {
+        this.handle(message);
+      });
   }
 
   async handle(message: Message) {
     await this.work(message);
-    this.kafka.commit('one.topic', message);
+    this.kafka.commit(this.topicName, message);
   }
 
   async work(message: Message) {
-    await new Promise(_ => setTimeout(_, 1500));
+    await new Promise((_) => setTimeout(_, 1500));
   }
 }
