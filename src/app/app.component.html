@@ -8,6 +8,8 @@
         }
     </div>
     <div class="consumers">
-        <app-consumer [topicName]="'one.topic'"></app-consumer>
+        @for (consumerTopicName of consumersTopics(); track $index) {
+            <app-consumer [topicName]="consumerTopicName"></app-consumer>
+        }
     </div>
 </div>

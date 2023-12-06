@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { ConsumerComponent } from "./consumer/consumer.component";
@@ -15,6 +15,8 @@ import { KafkaService } from './kafka.service';
     imports: [CommonModule, RouterOutlet, ConsumerComponent, ProducerComponent, TopicComponent]
 })
 export class AppComponent {
+  consumersTopics = signal(['one.topic', 'two.topic'])
+
   constructor(protected kafka: KafkaService) {
   }
 }
