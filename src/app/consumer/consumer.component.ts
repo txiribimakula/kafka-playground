@@ -1,8 +1,6 @@
 import { Component, Input, OnInit, effect } from '@angular/core';
 import { KafkaService } from '../kafka.service';
 import { Message } from '../message/message';
-import { toObservable } from '@angular/core/rxjs-interop';
-import { first, take } from 'rxjs';
 
 @Component({
   selector: 'app-consumer',

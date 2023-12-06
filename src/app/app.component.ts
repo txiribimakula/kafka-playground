@@ -4,7 +4,6 @@ import { RouterOutlet } from '@angular/router';
 import { ConsumerComponent } from "./consumer/consumer.component";
 import { ProducerComponent } from "./producer/producer.component";
 import { TopicComponent } from "./topic/topic.component";
-import { Topic } from './topic/topic';
 import { KafkaService } from './kafka.service';
 
 @Component({

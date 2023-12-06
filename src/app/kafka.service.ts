@@ -1,4 +1,4 @@
-import { Injectable, effect, signal } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Message } from './message/message';
 import { Topic } from './topic/topic';
 
