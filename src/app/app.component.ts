@@ -5,6 +5,7 @@ import { ConsumerComponent } from "./consumer/consumer.component";
 import { ProducerComponent } from "./producer/producer.component";
 import { TopicComponent } from "./topic/topic.component";
 import { KafkaService } from './kafka.service';
+import { Consumer } from './consumer/consumer';
 
 @Component({
     selector: 'app-root',
@@ -14,7 +15,7 @@ import { KafkaService } from './kafka.service';
     imports: [CommonModule, RouterOutlet, ConsumerComponent, ProducerComponent, TopicComponent]
 })
 export class AppComponent {
-  consumersTopics = signal(['one.topic', 'two.topic'])
+  consumers = signal([new Consumer(['one.topic']), new Consumer(['two.topic'])]);
 
   constructor(protected kafka: KafkaService) {
   }

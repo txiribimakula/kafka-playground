@@ -2,6 +2,7 @@ import { Component, Input, OnInit, Signal, computed } from '@angular/core';
 import { KafkaService } from '../kafka.service';
 import { Message } from '../message/message';
 import { Topic } from '../topic/topic';
+import { Consumer } from './consumer';
 
 @Component({
   selector: 'app-consumer',
@@ -11,7 +12,7 @@ import { Topic } from '../topic/topic';
   styleUrl: './consumer.component.scss',
 })
 export class ConsumerComponent implements OnInit {
-  @Input() topicName!: string;
+  @Input() consumer!: Consumer;
   topic!: Topic;
 
   hasPendingMessages?: Signal<boolean>;
@@ -20,7 +21,7 @@ export class ConsumerComponent implements OnInit {
   constructor(private kafka: KafkaService) {}
 
   ngOnInit(): void {
-    this.topic = this.kafka.topics().get(this.topicName)!;
+    this.topic = this.kafka.topics().get(this.consumer.topics[0])!;
     this.consume();
 
     this.hasPendingMessages = computed(() => {
@@ -32,9 +33,9 @@ export class ConsumerComponent implements OnInit {
 
     this.status = computed(() => {
       if (this.hasPendingMessages) {
-        return this.hasPendingMessages()
+        return (this.hasPendingMessages()
           ? 'Handling existing msgs...'
-          : 'Waiting for new msgs...';
+          : 'Waiting for new msgs...') + " on " + this.consumer.topics.join(', ');
       }
       return 'Loading...';
     });
@@ -48,7 +49,7 @@ export class ConsumerComponent implements OnInit {
 
   async handle(message: Message) {
     await this.work(message);
-    this.kafka.commit(this.topicName, message);
+    this.kafka.commit(this.consumer.topics[0], message);
   }
 
   async work(message: Message) {
