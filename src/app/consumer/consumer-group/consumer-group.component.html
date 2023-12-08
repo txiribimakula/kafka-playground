@@ -1,4 +1,4 @@
-<div class="consumer-groups">
+<div class="consumer-group">
     <p>Consumer group {{id}}</p>
     @for (consumer of kafka.consumersByGroupId().get(id); track $index) {
     <app-consumer [consumer]="consumer"></app-consumer>

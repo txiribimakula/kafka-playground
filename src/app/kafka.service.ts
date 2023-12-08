@@ -8,7 +8,7 @@ import { Consumer } from './consumer/consumer';
 })
 export class KafkaService {
   topics = signal<Map<string, Topic>>(new Map<string, Topic>());
-  consumers = signal([new Consumer(['one.topic'], "MyGroupId"), new Consumer(['two.topic'], "MyGroupId")]);
+  consumers = signal([new Consumer(['one.topic'], "MyGroupId0"), new Consumer(['two.topic'], "MyGroupId1")]);
   consumersByGroupId = computed(() => {
     const map = new Map<string, Consumer[]>();
     this.consumers().forEach((consumer) => {
