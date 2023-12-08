@@ -7,9 +7,9 @@
             <app-topic [name]="topic.name"></app-topic>
         }
     </div>
-    <div class="consumers">
-        @for (consumer of consumers(); track $index) {
-            <app-consumer [consumer]="consumer"></app-consumer>
+    <div class="consumer-groups">
+        @for (groupId of kafka.consumerGroups(); track $index) {
+            <app-consumer-group [id]="groupId"></app-consumer-group>
         }
     </div>
 </div>

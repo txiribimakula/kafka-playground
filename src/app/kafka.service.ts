@@ -1,12 +1,33 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, computed, signal } from '@angular/core';
 import { Message } from './message/message';
 import { Topic } from './topic/topic';
+import { Consumer } from './consumer/consumer';
 
 @Injectable({
   providedIn: 'root',
 })
 export class KafkaService {
   topics = signal<Map<string, Topic>>(new Map<string, Topic>());
+  consumers = signal([new Consumer(['one.topic'], "MyGroupId"), new Consumer(['two.topic'], "MyGroupId")]);
+  consumersByGroupId = computed(() => {
+    const map = new Map<string, Consumer[]>();
+    this.consumers().forEach((consumer) => {
+      const groupId = consumer.groupId;
+      if (map.has(groupId)) {
+        map.get(groupId)?.push(consumer);
+      } else {
+        map.set(groupId, [consumer]);
+      }
+    });
+    return map;
+  });
+  consumerGroups = computed(() => {
+    const groupIds = new Set<string>();
+    this.consumers().forEach((consumer) => {
+      groupIds.add(consumer.groupId);
+    });
+    return Array.from(groupIds);
+  });
 
   constructor() {
     var topic1 = new Topic('one.topic');
