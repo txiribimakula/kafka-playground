@@ -3,7 +3,7 @@
   grid-template-columns: 150px auto 150px;
   place-items: center;
   gap: 5%;
-  margin:30px;
+  margin: 30px;
 }
 
 .producers {
@@ -22,8 +22,8 @@
 }
 
 .consumer-groups {
-    display: grid;
-    grid-template-rows: repeat(auto-fit);
-    grid-gap: 10px;
-    width: 100%;
+  display: grid;
+  grid-template-rows: repeat(auto-fit);
+  grid-gap: 10px;
+  width: 100%;
 }

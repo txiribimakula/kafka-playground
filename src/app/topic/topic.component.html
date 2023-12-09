@@ -1,4 +1,8 @@
 <div class="container">
     TOPIC {{name}}
-    <app-partition [partition]="partition"></app-partition>
+    <div class="partitions">
+        @for (partition of partitions; track $index) {
+        <app-partition [partition]="partition"></app-partition>
+        }
+    </div>
 </div>

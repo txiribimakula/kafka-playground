@@ -14,11 +14,11 @@ import { Partition } from './partition/partition';
 export class TopicComponent implements OnInit {
   @Input({ required: true }) name!: string;
 
-  partition!: Partition;
+  partitions!: Partition[];
 
   constructor(private kafka: KafkaService) {}
 
   ngOnInit(): void {
-    this.partition = this.kafka.topics().get(this.name)!.partitions()[0];
+    this.partitions = this.kafka.topics().get(this.name)!.partitions();
   }
 }

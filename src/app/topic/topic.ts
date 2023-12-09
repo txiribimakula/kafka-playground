@@ -5,7 +5,7 @@ export class Topic {
   constructor(name: string) {
     this.name = name;
   }
-  partitions = signal([new Partition(0)]);
+  partitions = signal([new Partition(0), new Partition(1)]);
   
   name: string;
 }

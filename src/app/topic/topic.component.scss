@@ -4,3 +4,11 @@
     padding: 33px;
     text-align: center;
 }
+
+
+.partitions {
+    display: grid;
+    grid-template-rows: repeat(auto-fit);
+    grid-gap: 10px;
+    width: 100%;
+  }
