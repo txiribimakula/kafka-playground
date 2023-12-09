@@ -36,13 +36,18 @@ export class KafkaService {
     this.topics.set(this.topics().set(topic2.name, topic2));
   }
 
+  private counter = 0;
   produce(topicName: string, msg: string) {
     const topic = this.topics().get(topicName);
     if (topic) {
-      topic.partitions()[0].messages.update((values) => {
-        values.push(new Message(msg, topic.partitions()[0].messages().length));
+      const partitionIndex = this.counter % topic.partitions().length;
+      const partition = topic.partitions()[partitionIndex];
+      partition.messages.update((values) => {
+        values.push(new Message(msg, partition.messages().length));
         return [...values];
-      });
+      });      
+      this.counter++;
+
     } else {
       throw new Error(`Topic ${topicName} does not exist`);
     }
