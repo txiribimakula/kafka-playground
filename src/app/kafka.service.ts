@@ -30,8 +30,8 @@ export class KafkaService {
   });
 
   constructor() {
-    var topic1 = new Topic('one.topic');
-    var topic2 = new Topic('two.topic');
+    var topic1 = new Topic('one.topic', 2);
+    var topic2 = new Topic('two.topic', 1);
     this.topics.set(this.topics().set(topic1.name, topic1));
     this.topics.set(this.topics().set(topic2.name, topic2));
   }

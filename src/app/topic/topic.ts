@@ -2,10 +2,12 @@ import { signal } from '@angular/core';
 import { Partition } from './partition/partition';
 
 export class Topic {
-  constructor(name: string) {
+  constructor(name: string, partitionsQuantity: number) {
     this.name = name;
+    this.partitions = signal(Array.from({length: partitionsQuantity}, (_, i) => new Partition(i)));
   }
-  partitions = signal([new Partition(0), new Partition(1)]);
+
+  partitions;
   
   name: string;
 }
