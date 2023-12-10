@@ -1,5 +1,4 @@
 import { Component, Input, Signal } from '@angular/core';
-import { KafkaService } from '../../kafka.service';
 import { Message } from '../../message/message';
 import { MessageComponent } from "../../message/message.component";
 import { Partition } from './partition';
@@ -15,7 +14,7 @@ export class PartitionComponent {
   @Input() partition!: Partition;
   messages?: Signal<Message[]>;
 
-  constructor(private kafka: KafkaService) {
+  constructor() {
   }
 
   ngOnInit(): void {
