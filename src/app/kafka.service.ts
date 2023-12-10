@@ -10,18 +10,7 @@ import { ConsumerService } from './consumer/consumer.service';
 export class KafkaService {
 
   topics = signal<Map<string, Topic>>(new Map<string, Topic>());
-  consumersByGroupId = computed(() => {
-    const map = new Map<string, Consumer[]>();
-    this.consumer.consumers().forEach((consumer) => {
-      const groupId = consumer.groupId;
-      if (map.has(groupId)) {
-        map.get(groupId)?.push(consumer);
-      } else {
-        map.set(groupId, [consumer]);
-      }
-    });
-    return map;
-  });
+
   consumerGroups = computed(() => {
     const groupIds = new Set<string>();
     this.consumer.consumers().forEach((consumer) => {

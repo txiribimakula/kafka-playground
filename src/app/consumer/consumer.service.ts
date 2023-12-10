@@ -1,6 +1,5 @@
 import { Injectable, signal } from '@angular/core';
 import { Consumer } from './consumer';
-import { ConsumerGroupService } from './consumer-group/consumer-group.service';
 
 @Injectable({
   providedIn: 'root',
