@@ -17,7 +17,6 @@ export class Partition {
   currentMessage = computed(() => this.messages()[this.offset()]);
   messages$ = toObservable(this.currentMessage).pipe(
     filter((message) => {
-      console.log(message)
       return message != undefined
     })
   );
