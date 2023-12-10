@@ -12,18 +12,26 @@ import { concat, concatMap } from 'rxjs';
   styleUrl: './consumer.component.scss',
 })
 export class ConsumerComponent implements OnInit {
-  @Input() consumer!: Consumer;
+  @Input() consumer!: Signal<Consumer>;
 
-  status?: Signal<string>;
+  status: Signal<string>;
 
-  constructor(private kafka: KafkaService) {}
+  constructor(private kafka: KafkaService) {
+    this.status = computed(() => this.consumer().topicsNames.join(', ') + ' - ');
+  }
 
   ngOnInit(): void {
     this.consume();
   }
 
+  ngAfterViewInit(): void {
+    console.log(this.consumer);
+  }
+
   consume() {
-    this.consumer.messages$.pipe(concatMap(message => this.handle(message))).subscribe();
+    this.consumer().messages$
+      .pipe(concatMap((message) => this.handle(message)))
+      .subscribe();
   }
 
   async handle(message: Message) {

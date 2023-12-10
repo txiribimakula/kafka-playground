@@ -1,4 +1,4 @@
-import { Component, Input, computed } from '@angular/core';
+import { Component, Input, Signal, computed, signal } from '@angular/core';
 import { ConsumerComponent } from '../consumer.component';
 import { KafkaService } from '../../kafka.service';
 import { Consumer } from '../consumer';
@@ -16,9 +16,9 @@ export class ConsumerGroupComponent {
   @Input() id!: string;
 
   consumersByGroupId = computed(() => {
-    const consumersByGroupId: Consumer[] = [];
+    const consumersByGroupId: Signal<Consumer>[] = [];
     this.consumer.consumers().forEach((consumer) => {
-      if (consumer.groupId === this.id) {
+      if (consumer().groupId === this.id) {
         consumersByGroupId.push(consumer);
       }
     });
@@ -28,7 +28,7 @@ export class ConsumerGroupComponent {
   usedPartitions = computed(() => {
     const usedPartitions = new Set<Partition>();
     this.consumersByGroupId().forEach((consumer) => {
-      consumer.topicsNames.forEach((topicName) => {
+      consumer().topicsNames.forEach((topicName) => {
         this.kafka
           .topics()
           .get(topicName)!
@@ -42,9 +42,9 @@ export class ConsumerGroupComponent {
   });
 
   consumerByPartitions = computed(() => {
-    const consumerByPartitions = new Map<Partition, Consumer>();
+    const consumerByPartitions = new Map<Partition, Signal<Consumer>>();
     this.consumersByGroupId().forEach((consumer) => {
-      consumer.topicsNames.forEach((topicName) => {
+      consumer().topicsNames.forEach((topicName) => {
         this.kafka
           .topics()
           .get(topicName)!
@@ -67,7 +67,9 @@ export class ConsumerGroupComponent {
       topic.partitions().forEach((partition) => {
         partition.messages$.subscribe((message) => {
           const consumer = this.consumerByPartitions().get(partition);
-          consumer?.messagesSubject.next(message);
+          if(consumer){
+            consumer().messagesSubject.next(message);
+          }
         });
       });
     });

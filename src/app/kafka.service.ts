@@ -14,7 +14,7 @@ export class KafkaService {
   consumerGroups = computed(() => {
     const groupIds = new Set<string>();
     this.consumer.consumers().forEach((consumer) => {
-      groupIds.add(consumer.groupId);
+      groupIds.add(consumer().groupId);
     });
     return Array.from(groupIds);
   });
