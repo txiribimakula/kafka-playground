@@ -29,7 +29,4 @@ export class ConsumerService {
       )
     );
   }
-
-  add(consumer: Consumer) {}
-
 }
