@@ -2,6 +2,7 @@ import { Component, Input, OnInit, Signal, computed } from '@angular/core';
 import { KafkaService } from '../kafka.service';
 import { Message } from '../message/message';
 import { Consumer } from './consumer';
+import { concat, concatMap } from 'rxjs';
 
 @Component({
   selector: 'app-consumer',
@@ -22,10 +23,7 @@ export class ConsumerComponent implements OnInit {
   }
 
   consume() {
-    this.consumer.messages$.subscribe((message) => {
-      console.log("handling message")
-      this.handle(message);
-    });
+    this.consumer.messages$.pipe(concatMap(message => this.handle(message))).subscribe();
   }
 
   async handle(message: Message) {
