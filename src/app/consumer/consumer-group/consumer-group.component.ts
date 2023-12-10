@@ -28,10 +28,10 @@ export class ConsumerGroupComponent {
   usedPartitions = computed(() => {
     const usedPartitions = new Set<Partition>();
     this.consumersByGroupId().forEach((consumer) => {
-      consumer.topics.forEach((topic) => {
+      consumer.topicsNames.forEach((topicName) => {
         this.kafka
           .topics()
-          .get(topic)!
+          .get(topicName)!
           .partitions()
           .forEach((partition) => {
             usedPartitions.add(partition);
@@ -44,10 +44,10 @@ export class ConsumerGroupComponent {
   consumerByPartitions = computed(() => {
     const consumerByPartitions = new Map<Partition, Consumer>();
     this.consumersByGroupId().forEach((consumer) => {
-      consumer.topics.forEach((topic) => {
+      consumer.topicsNames.forEach((topicName) => {
         this.kafka
           .topics()
-          .get(topic)!
+          .get(topicName)!
           .partitions()
           .forEach((partition) => {
             consumerByPartitions.set(partition, consumer);

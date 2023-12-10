@@ -22,11 +22,11 @@ export class ConsumerGroupService {
   consumersByTopic = computed(() => {
     const consumersByTopic = new Map<string, Consumer[]>();
     this.consumer.consumers().forEach((consumer) => {
-      consumer.topics.forEach((topic) => {
-        if (!consumersByTopic.has(topic)) {
-          consumersByTopic.set(topic, []);
+      consumer.topicsNames.forEach((topicName) => {
+        if (!consumersByTopic.has(topicName)) {
+          consumersByTopic.set(topicName, []);
         }
-        consumersByTopic.get(topic)!.push(consumer);
+        consumersByTopic.get(topicName)!.push(consumer);
       });
     });
     return consumersByTopic;
