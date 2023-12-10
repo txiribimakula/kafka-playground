@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Signal, computed } from '@angular/core';
+import { Component, Input, OnInit, Signal, computed, signal } from '@angular/core';
 import { KafkaService } from '../kafka.service';
 import { Message } from '../message/message';
 import { concatMap } from 'rxjs';
@@ -14,10 +14,11 @@ import { ConsumerService } from './consumer.service';
 export class ConsumerComponent {
   @Input() consumerId!: `${string}-${string}-${string}-${string}-${string}`;
 
-  status: Signal<string>;
+  topics: Signal<string>;
+  status = signal("Waiting for messages...");
 
   constructor(private kafka: KafkaService, private consumer: ConsumerService) {
-    this.status = computed(
+    this.topics = computed(
       () =>
         '[' + this.consumer.consumers().get(this.consumerId)!().topicsNames.join(', ') + ']'
     );
@@ -34,8 +35,10 @@ export class ConsumerComponent {
   }
 
   async handle(message: Message) {
+    this.status.set("Handling message...");
     await this.work(message);
     this.kafka.commit(message);
+    this.status.set("Waiting for messages...");
   }
 
   async work(message: Message) {
