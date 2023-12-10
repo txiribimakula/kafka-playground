@@ -26,22 +26,6 @@ export class ConsumerGroupComponent {
     return consumersByGroupId;
   });
 
-  usedPartitions = computed(() => {
-    const usedPartitions = new Set<Partition>();
-    this.consumersByGroupId().forEach((consumer) => {
-      consumer().topicsNames.forEach((topicName) => {
-        this.topic
-          .topics()
-          .get(topicName)!
-          .partitions()
-          .forEach((partition) => {
-            usedPartitions.add(partition);
-          });
-      });
-    });
-    return usedPartitions;
-  });
-
   consumerByPartitions = computed(() => {
     const consumerByPartitions = new Map<Partition, Signal<Consumer>>();
     this.consumersByGroupId().forEach((consumer) => {
