@@ -11,15 +11,7 @@ export class KafkaService {
 
   topics = signal<Map<string, Topic>>(new Map<string, Topic>());
 
-  consumerGroups = computed(() => {
-    const groupIds = new Set<string>();
-    this.consumer.consumers().forEach((consumer) => {
-      groupIds.add(consumer().groupId);
-    });
-    return Array.from(groupIds);
-  });
-
-  constructor(private consumer: ConsumerService) {
+  constructor() {
     var topic1 = new Topic('one.topic', 2);
     var topic2 = new Topic('two.topic', 1);
     this.topics.set(this.topics().set(topic1.name, topic1));
