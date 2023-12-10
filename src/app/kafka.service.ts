@@ -1,8 +1,5 @@
-import { Injectable, computed, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Message } from './message/message';
-import { Topic } from './topic/topic';
-import { Consumer } from './consumer/consumer';
-import { ConsumerService } from './consumer/consumer.service';
 import { TopicService } from './topic/topic.service';
 
 @Injectable({
