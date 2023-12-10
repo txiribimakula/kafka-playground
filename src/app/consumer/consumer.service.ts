@@ -29,4 +29,10 @@ export class ConsumerService {
       )
     );
   }
+
+  addConsumer(topics: string[], groupId: string) {
+    this.consumers.update(
+      () => new Map(this.consumers().set(crypto.randomUUID(), signal(new Consumer(topics, groupId))))
+    );
+  }
 }

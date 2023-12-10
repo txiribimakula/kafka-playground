@@ -81,4 +81,8 @@ export class ConsumerGroupComponent {
       });
     });
   }
+
+  addConsumer() {
+    this.consumer.addConsumer(['one.topic'], this.id);
+  }
 }

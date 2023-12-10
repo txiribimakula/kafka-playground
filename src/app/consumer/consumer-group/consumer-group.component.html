@@ -3,4 +3,5 @@
     @for (consumerId of consumersByGroupId(); track $index) {
         <app-consumer [consumerId]="consumerId"></app-consumer>
     }
+    <button (click)="addConsumer()">+</button>
 </div>
