@@ -1,8 +1,8 @@
 import { Component, Input, OnInit, Signal, computed } from '@angular/core';
 import { KafkaService } from '../kafka.service';
 import { Message } from '../message/message';
-import { Consumer } from './consumer';
-import { concat, concatMap } from 'rxjs';
+import { concatMap } from 'rxjs';
+import { ConsumerService } from './consumer.service';
 
 @Component({
   selector: 'app-consumer',
@@ -12,12 +12,17 @@ import { concat, concatMap } from 'rxjs';
   styleUrl: './consumer.component.scss',
 })
 export class ConsumerComponent implements OnInit {
-  @Input() consumer!: Signal<Consumer>;
+  @Input() consumerId!: `${string}-${string}-${string}-${string}-${string}`;
 
   status: Signal<string>;
 
-  constructor(private kafka: KafkaService) {
-    this.status = computed(() => this.consumer().topicsNames.join(', ') + ' - ');
+  constructor(private kafka: KafkaService, private consumer: ConsumerService) {
+    this.status = computed(
+      () =>
+        this.consumer.consumers().get(this.consumerId)!().topicsNames.join(
+          ', '
+        ) + ' - '
+    );
   }
 
   ngOnInit(): void {
@@ -29,8 +34,8 @@ export class ConsumerComponent implements OnInit {
   }
 
   consume() {
-    this.consumer().messages$
-      .pipe(concatMap((message) => this.handle(message)))
+    this.consumer.consumers().get(this.consumerId)!()
+      .messages$.pipe(concatMap((message) => this.handle(message)))
       .subscribe();
   }
 

@@ -1,7 +1,5 @@
-import { Component, Input, Signal, computed, signal } from '@angular/core';
+import { Component, Input, computed } from '@angular/core';
 import { ConsumerComponent } from '../consumer.component';
-import { KafkaService } from '../../kafka.service';
-import { Consumer } from '../consumer';
 import { ConsumerService } from '../consumer.service';
 import { Partition } from '../../topic/partition/partition';
 import { TopicService } from '../../topic/topic.service';
@@ -17,25 +15,45 @@ export class ConsumerGroupComponent {
   @Input() id!: string;
 
   consumersByGroupId = computed(() => {
-    const consumersByGroupId: Signal<Consumer>[] = [];
-    this.consumer.consumers().forEach((consumer) => {
+    const consumersByGroupId: `${string}-${string}-${string}-${string}-${string}`[] =
+      [];
+    this.consumer.consumers().forEach((consumer, key) => {
       if (consumer().groupId === this.id) {
-        consumersByGroupId.push(consumer);
+        consumersByGroupId.push(key);
       }
     });
     return consumersByGroupId;
   });
 
+  consumersByTopic = computed(() => {
+    const consumersByTopic = new Map<
+      string,
+      `${string}-${string}-${string}-${string}-${string}`[]
+    >();
+    this.consumersByGroupId().forEach((key) => {
+      this.consumer.consumers().get(key)!().topicsNames.forEach((topicName) => {
+        if (!consumersByTopic.has(topicName)) {
+          consumersByTopic.set(topicName, []);
+        }
+        consumersByTopic.get(topicName)!.push(key);
+      });
+    });
+    return consumersByTopic;
+  });
+
   consumerByPartitions = computed(() => {
-    const consumerByPartitions = new Map<Partition, Signal<Consumer>>();
-    this.consumersByGroupId().forEach((consumer) => {
-      consumer().topicsNames.forEach((topicName) => {
+    const consumerByPartitions = new Map<
+      Partition,
+      `${string}-${string}-${string}-${string}-${string}`
+    >();
+    this.consumersByGroupId().forEach((key) => {
+      this.consumer.consumers().get(key)!().topicsNames.forEach((topicName) => {
         this.topic
           .topics()
           .get(topicName)!
           .partitions()
           .forEach((partition) => {
-            consumerByPartitions.set(partition, consumer);
+            consumerByPartitions.set(partition, key);
           });
       });
     });
@@ -51,9 +69,11 @@ export class ConsumerGroupComponent {
     this.topic.topics().forEach((topic) => {
       topic.partitions().forEach((partition) => {
         partition.messages$.subscribe((message) => {
-          const consumer = this.consumerByPartitions().get(partition);
-          if(consumer){
-            consumer().messagesSubject.next(message);
+          const consumerKey = this.consumerByPartitions().get(partition);
+          if (consumerKey) {
+            this.consumer.consumers().get(consumerKey)!().messagesSubject.next(
+              message
+            );
           }
         });
       });

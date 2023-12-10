@@ -1,6 +1,6 @@
 <div class="consumer-group">
     <p>Consumer group {{id}}</p>
-    @for (consumer of consumersByGroupId(); track $index) {
-    <app-consumer [consumer]="consumer"></app-consumer>
+    @for (consumerId of consumersByGroupId(); track $index) {
+        <app-consumer [consumerId]="consumerId"></app-consumer>
     }
 </div>

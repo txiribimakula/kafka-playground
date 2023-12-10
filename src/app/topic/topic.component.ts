@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MessageComponent } from '../message/message.component';
 import { PartitionComponent } from './partition/partition.component';
-import { KafkaService } from '../kafka.service';
 import { Partition } from './partition/partition';
 import { TopicService } from './topic.service';
+import { ConsumerGroupService } from '../consumer/consumer-group/consumer-group.service';
 
 @Component({
   selector: 'app-topic',
@@ -17,7 +17,7 @@ export class TopicComponent implements OnInit {
 
   partitions!: Partition[];
 
-  constructor(private topic: TopicService) {}
+  constructor(private topic: TopicService, protected consumerGroup: ConsumerGroupService) {}
 
   ngOnInit(): void {
     this.partitions = this.topic.topics().get(this.name)!.partitions();
