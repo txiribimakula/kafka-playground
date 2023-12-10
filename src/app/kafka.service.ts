@@ -3,29 +3,29 @@ import { Message } from './message/message';
 import { Topic } from './topic/topic';
 import { Consumer } from './consumer/consumer';
 import { ConsumerService } from './consumer/consumer.service';
+import { TopicService } from './topic/topic.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class KafkaService {
-
-  topics = signal<Map<string, Topic>>(new Map<string, Topic>());
-
-  constructor() {
-    var topic1 = new Topic('one.topic', 2);
-    var topic2 = new Topic('two.topic', 1);
-    this.topics.set(this.topics().set(topic1.name, topic1));
-    this.topics.set(this.topics().set(topic2.name, topic2));
-  }
+  constructor(private topic: TopicService) {}
 
   private counter = 0;
   produce(topicName: string, msg: string) {
-    const topic = this.topics().get(topicName);
+    const topic = this.topic.topics().get(topicName);
     if (topic) {
       const partitionIndex = this.counter % topic.partitions().length;
       const partition = topic.partitions()[partitionIndex];
       partition.messages.update((values) => {
-        values.push(new Message(msg, partition.messages().length, topicName, partitionIndex));
+        values.push(
+          new Message(
+            msg,
+            partition.messages().length,
+            topicName,
+            partitionIndex
+          )
+        );
         return [...values];
       });
       this.counter++;
@@ -35,7 +35,7 @@ export class KafkaService {
   }
 
   commit(message: Message) {
-    const topic = this.topics().get(message.topic)!;
+    const topic = this.topic.topics().get(message.topic)!;
     topic.partitions()[message.partition].messages.update((values) => {
       const newValues = values.map((value) => {
         if (value.offset == message.offset) {
@@ -47,6 +47,4 @@ export class KafkaService {
     });
     topic.partitions()[message.partition].offset.set(message.offset + 1);
   }
-
-  consume() {}
 }

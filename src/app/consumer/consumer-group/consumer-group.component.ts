@@ -4,6 +4,7 @@ import { KafkaService } from '../../kafka.service';
 import { Consumer } from '../consumer';
 import { ConsumerService } from '../consumer.service';
 import { Partition } from '../../topic/partition/partition';
+import { TopicService } from '../../topic/topic.service';
 
 @Component({
   selector: 'app-consumer-group',
@@ -29,7 +30,7 @@ export class ConsumerGroupComponent {
     const usedPartitions = new Set<Partition>();
     this.consumersByGroupId().forEach((consumer) => {
       consumer().topicsNames.forEach((topicName) => {
-        this.kafka
+        this.topic
           .topics()
           .get(topicName)!
           .partitions()
@@ -45,7 +46,7 @@ export class ConsumerGroupComponent {
     const consumerByPartitions = new Map<Partition, Signal<Consumer>>();
     this.consumersByGroupId().forEach((consumer) => {
       consumer().topicsNames.forEach((topicName) => {
-        this.kafka
+        this.topic
           .topics()
           .get(topicName)!
           .partitions()
@@ -58,12 +59,12 @@ export class ConsumerGroupComponent {
   });
 
   constructor(
-    protected kafka: KafkaService,
+    protected topic: TopicService,
     private consumer: ConsumerService
   ) {}
 
   ngAfterViewInit() {
-    this.kafka.topics().forEach((topic) => {
+    this.topic.topics().forEach((topic) => {
       topic.partitions().forEach((partition) => {
         partition.messages$.subscribe((message) => {
           const consumer = this.consumerByPartitions().get(partition);

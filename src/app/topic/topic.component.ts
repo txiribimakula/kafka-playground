@@ -3,6 +3,7 @@ import { MessageComponent } from '../message/message.component';
 import { PartitionComponent } from './partition/partition.component';
 import { KafkaService } from '../kafka.service';
 import { Partition } from './partition/partition';
+import { TopicService } from './topic.service';
 
 @Component({
   selector: 'app-topic',
@@ -16,9 +17,9 @@ export class TopicComponent implements OnInit {
 
   partitions!: Partition[];
 
-  constructor(private kafka: KafkaService) {}
+  constructor(private topic: TopicService) {}
 
   ngOnInit(): void {
-    this.partitions = this.kafka.topics().get(this.name)!.partitions();
+    this.partitions = this.topic.topics().get(this.name)!.partitions();
   }
 }

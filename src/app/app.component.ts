@@ -7,6 +7,7 @@ import { TopicComponent } from "./topic/topic.component";
 import { KafkaService } from './kafka.service';
 import { ConsumerGroupComponent } from "./consumer/consumer-group/consumer-group.component";
 import { ConsumerGroupService } from './consumer/consumer-group/consumer-group.service';
+import { TopicService } from './topic/topic.service';
 
 @Component({
     selector: 'app-root',
@@ -16,6 +17,6 @@ import { ConsumerGroupService } from './consumer/consumer-group/consumer-group.s
     imports: [CommonModule, RouterOutlet, ConsumerComponent, ProducerComponent, TopicComponent, ConsumerGroupComponent]
 })
 export class AppComponent {
-  constructor(protected kafka: KafkaService, protected consumerGroup: ConsumerGroupService) {
+  constructor(protected topic: TopicService, protected consumerGroup: ConsumerGroupService) {
   }
 }
