@@ -3,6 +3,7 @@ import { ConsumerComponent } from '../consumer.component';
 import { ConsumerService } from '../consumer.service';
 import { Partition } from '../../topic/partition/partition';
 import { TopicService } from '../../topic/topic.service';
+import { ConsumerGroupService } from './consumer-group.service';
 
 @Component({
   selector: 'app-consumer-group',
@@ -62,14 +63,15 @@ export class ConsumerGroupComponent {
 
   constructor(
     protected topic: TopicService,
-    private consumer: ConsumerService
+    private consumer: ConsumerService,
+    private consumerGroup: ConsumerGroupService
   ) {}
 
   ngAfterViewInit() {
-    this.topic.topics().forEach((topic) => {
-      topic.partitions().forEach((partition) => {
+    this.consumerGroup.topicsByGroupId().get(this.id)!.forEach((topicName) => {
+      this.topic.topics().get(topicName)!.partitions().forEach((partition) => {
         partition.messages$.subscribe((message) => {
-          const consumerKey = this.consumerByPartitions().get(partition);
+          const consumerKey = this.consumerGroup.consumerByPartitions().get(partition);
           if (consumerKey) {
             this.consumer.consumers().get(consumerKey)!().messagesSubject.next(
               message

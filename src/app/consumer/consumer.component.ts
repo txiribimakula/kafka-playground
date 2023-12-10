@@ -35,7 +35,7 @@ export class ConsumerComponent {
   }
 
   async handle(message: Message) {
-    this.status.set("Handling message...");
+    this.status.set("Handling message from partition " + message.partition);
     await this.work(message);
     this.kafka.commit(message);
     this.status.set("Waiting for messages...");
