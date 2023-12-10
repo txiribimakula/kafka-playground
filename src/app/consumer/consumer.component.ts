@@ -11,7 +11,7 @@ import { ConsumerService } from './consumer.service';
   templateUrl: './consumer.component.html',
   styleUrl: './consumer.component.scss',
 })
-export class ConsumerComponent implements OnInit {
+export class ConsumerComponent {
   @Input() consumerId!: `${string}-${string}-${string}-${string}-${string}`;
 
   status: Signal<string>;
@@ -19,18 +19,12 @@ export class ConsumerComponent implements OnInit {
   constructor(private kafka: KafkaService, private consumer: ConsumerService) {
     this.status = computed(
       () =>
-        this.consumer.consumers().get(this.consumerId)!().topicsNames.join(
-          ', '
-        ) + ' - '
+        '[' + this.consumer.consumers().get(this.consumerId)!().topicsNames.join(', ') + ']'
     );
   }
 
   ngOnInit(): void {
     this.consume();
-  }
-
-  ngAfterViewInit(): void {
-    console.log(this.consumer);
   }
 
   consume() {
@@ -41,7 +35,6 @@ export class ConsumerComponent implements OnInit {
 
   async handle(message: Message) {
     await this.work(message);
-    console.log(this.consumer);
     this.kafka.commit(message);
   }
 
