@@ -1,4 +1,13 @@
-<p class="producer">PRODUCER
-    <input type="text" [(ngModel)]="topic"/>
-    <button (click)="produce()">produce</button>
-</p>
+<mat-card class="producer">
+  <mat-card-content>
+    <mat-form-field>
+      <mat-label>Topic</mat-label>
+      <mat-select [(ngModel)]="topic">
+        @for (topicName of ["one.topic", "two.topic"]; track topicName) {
+        <mat-option [value]="topicName">{{topicName}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button (click)="produce()">produce</button>
+  </mat-card-content>
+</mat-card>
