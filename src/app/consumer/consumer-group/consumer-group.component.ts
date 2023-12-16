@@ -6,6 +6,7 @@ import { TopicService } from '../../topic/topic.service';
 import { ConsumerGroupService } from './consumer-group.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { animate, query, stagger, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-consumer-group',
@@ -13,6 +14,17 @@ import { MatButtonModule } from '@angular/material/button';
   templateUrl: './consumer-group.component.html',
   styleUrl: './consumer-group.component.scss',
   imports: [ConsumerComponent, MatCardModule, MatButtonModule],
+  animations: [
+    trigger('myInsertRemoveTrigger', [
+      transition(':enter', [
+        style({ transform: 'scale(100%, 0%)', height: 0 }),
+        animate('250ms', style({ transform: 'scale(100%)', height: 100 })),
+      ]),
+      transition(':leave', [
+        animate('250ms', style({ height: 0 }))
+      ])
+    ]),
+  ]
 })
 export class ConsumerGroupComponent {
   @Input() id!: string;
