@@ -1,8 +1,10 @@
-<div class="container">
-    TOPIC {{name}}
-    <div class="partitions">
+<mat-card class="container">
+    <mat-card-header>
+        <mat-card-title>TOPIC {{name}} </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="partitions">
         @for (partition of partitions; track $index) {
         <app-partition [partition]="partition"></app-partition>
         }
-    </div>
-</div>
+    </mat-card-content>
+</mat-card>
