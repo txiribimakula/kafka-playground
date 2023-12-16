@@ -12,10 +12,7 @@ import { concatMap } from 'rxjs';
 import { ConsumerService } from './consumer.service';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
-import {
-  MatProgressBarModule,
-  ProgressBarMode,
-} from '@angular/material/progress-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-consumer',
