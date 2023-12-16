@@ -2,8 +2,10 @@
     <mat-card-header>
         <mat-card-title>Consumer group {{id}} </mat-card-title>
     </mat-card-header>
-    @for (consumerId of consumersByGroupId(); track $index) {
-    <app-consumer [consumerId]="consumerId"></app-consumer>
-    }
+    <div class="consumers">
+        @for (consumerId of consumersByGroupId(); track $index) {
+            <app-consumer [consumerId]="consumerId"></app-consumer>
+        }
+    </div>
     <button mat-mini-fab (click)="addConsumer()">+</button>
 </mat-card>

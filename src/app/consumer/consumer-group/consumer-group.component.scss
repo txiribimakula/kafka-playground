@@ -1,4 +1,20 @@
 .consumer-group {
     background-color: lightblue;
-    padding: 5px;
+    padding: 0 15px 0 15px;
+}
+
+.consumers {
+    display: grid;
+    grid-template-rows: repeat(auto-fit);
+    grid-gap: 10px;
+    width: 100%;
+}
+
+button {
+    margin:10px;
+    align-self: center;
+}
+
+mat-card-header{
+    margin-bottom: 15px;
 }
