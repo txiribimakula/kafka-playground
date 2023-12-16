@@ -1,7 +1,9 @@
-<div class="consumer-group">
-    <p>Consumer group {{id}}</p>
+<mat-card class="consumer-group">
+    <mat-card-header>
+        <mat-card-title>Consumer group {{id}} </mat-card-title>
+    </mat-card-header>
     @for (consumerId of consumersByGroupId(); track $index) {
-        <app-consumer [consumerId]="consumerId"></app-consumer>
+    <app-consumer [consumerId]="consumerId"></app-consumer>
     }
-    <button (click)="addConsumer()">+</button>
-</div>
+    <button mat-mini-fab (click)="addConsumer()">+</button>
+</mat-card>

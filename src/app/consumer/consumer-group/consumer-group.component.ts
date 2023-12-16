@@ -4,13 +4,15 @@ import { ConsumerService } from '../consumer.service';
 import { Partition } from '../../topic/partition/partition';
 import { TopicService } from '../../topic/topic.service';
 import { ConsumerGroupService } from './consumer-group.service';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-consumer-group',
   standalone: true,
   templateUrl: './consumer-group.component.html',
   styleUrl: './consumer-group.component.scss',
-  imports: [ConsumerComponent],
+  imports: [ConsumerComponent, MatCardModule, MatButtonModule],
 })
 export class ConsumerGroupComponent {
   @Input() id!: string;
@@ -68,18 +70,27 @@ export class ConsumerGroupComponent {
   ) {}
 
   ngAfterViewInit() {
-    this.consumerGroup.topicsByGroupId().get(this.id)!.forEach((topicName) => {
-      this.topic.topics().get(topicName)!.partitions().forEach((partition) => {
-        partition.messages$.subscribe((message) => {
-          const consumerKey = this.consumerGroup.consumerByPartitions().get(partition);
-          if (consumerKey) {
-            this.consumer.consumers().get(consumerKey)!().messagesSubject.next(
-              message
-            );
-          }
-        });
+    this.consumerGroup
+      .topicsByGroupId()
+      .get(this.id)!
+      .forEach((topicName) => {
+        this.topic
+          .topics()
+          .get(topicName)!
+          .partitions()
+          .forEach((partition) => {
+            partition.messages$.subscribe((message) => {
+              const consumerKey = this.consumerGroup
+                .consumerByPartitions()
+                .get(partition);
+              if (consumerKey) {
+                this.consumer
+                  .consumers()
+                  .get(consumerKey)!().messagesSubject.next(message);
+              }
+            });
+          });
       });
-    });
   }
 
   addConsumer() {
