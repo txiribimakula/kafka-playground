@@ -1,1 +1,12 @@
-<p class="consumer">CONSUMER {{topics()}} {{status()}}</p>
+<mat-card class="consumer">
+    <mat-card-header>
+        <mat-card-title>CONSUMER </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        {{topics()}}
+    </mat-card-content>
+    <mat-card-footer>
+        {{status()}}
+        <mat-progress-bar [mode]="progress()"></mat-progress-bar>
+    </mat-card-footer>
+</mat-card>
