@@ -1,7 +1,7 @@
 .container {
     color: black;
-    width: 50px;
-    padding: 10px 0 10px 0;
+    width: 75px;
+    height: 90px;
     text-align: center;
 }
 
@@ -11,4 +11,8 @@
 
 .committed {
     background-color: beige;
+}
+
+mat-card-content {
+    font-size: x-small;
 }

@@ -1,5 +1,5 @@
-<div class="container" [ngClass]="{'committed': message.isCommitted, 'new': !message.isCommitted}">
-    <p>
+<mat-card class="container" [ngClass]="{'committed': message.isCommitted, 'new': !message.isCommitted}">
+    <mat-card-content>
         {{message.content}}
-    </p>
-</div>
+    </mat-card-content>
+</mat-card>
