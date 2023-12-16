@@ -13,11 +13,12 @@ import { ConsumerService } from './consumer.service';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-consumer',
   standalone: true,
-  imports: [MatCardModule, MatSelectModule, MatProgressBarModule],
+  imports: [MatCardModule, MatSelectModule, MatProgressBarModule, MatDividerModule],
   templateUrl: './consumer.component.html',
   styleUrl: './consumer.component.scss',
 })
