@@ -1,6 +1,6 @@
 import { computed, signal } from "@angular/core";
 import { Message } from "../../message/message";
-import { filter } from "rxjs";
+import { Observable, filter } from "rxjs";
 import { toObservable } from '@angular/core/rxjs-interop';
 
 export class Partition {
@@ -15,9 +15,5 @@ export class Partition {
 
   messages = signal<Message[]>([]);
   currentMessage = computed(() => this.messages()[this.offset()]);
-  messages$ = toObservable(this.currentMessage).pipe(
-    filter((message) => {
-      return message != undefined
-    })
-  );
+  messages$!: Observable<Message>;
 }
