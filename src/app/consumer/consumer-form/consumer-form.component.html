@@ -1,9 +1,13 @@
 <mat-form-field>
     <mat-label>Topic</mat-label>
-    <input matInput [(ngModel)]="topicName">
+    <mat-select [(ngModel)]="topicName">
+      @for (topic of topic.topics(); track $index) {
+      <mat-option [value]="topic[0]">{{topic[0]}}</mat-option>
+      }
+    </mat-select>
 </mat-form-field>
 <mat-form-field>
     <mat-label>Group</mat-label>
-    <input matInput [(ngModel)]="groupId">
+    <input matInput value="default" disabled>
 </mat-form-field>
 <button mat-mini-fab color="primary" (click)="addConsumer()">+</button>
