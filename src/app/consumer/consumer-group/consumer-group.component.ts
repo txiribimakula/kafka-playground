@@ -80,30 +80,19 @@ export class ConsumerGroupComponent {
   ) {}
 
   ngAfterViewInit() {
-    this.consumerGroup
-      .topicsByGroupId()
-      .get(this.id)!
-      .forEach((topicName) => {
-        this.topic
-          .topics()
-          .get(topicName)!
-          .partitions()
-          .forEach((partition) => {
-            partition.messages$.subscribe((message) => {
-              const consumerKey = this.consumerGroup
-                .consumerByPartitions()
-                .get(partition);
-              if (consumerKey) {
-                this.consumer
-                  .consumers()
-                  .get(consumerKey)!().messagesSubject.next(message);
-              }
-            });
-          });
+    this.topic.topics().forEach(topic => {
+      topic.partitions().forEach(partition => {
+        partition.messages$.subscribe((message) => {
+          const consumerKey = this.consumerGroup
+            .consumerByPartitions()
+            .get(partition);
+          if (consumerKey) {
+            this.consumer
+              .consumers()
+              .get(consumerKey)!().messagesSubject.next(message);
+          }
+        });
       });
-  }
-
-  addConsumer() {
-    this.consumer.addConsumer(['one.topic'], this.id);
+    });
   }
 }
