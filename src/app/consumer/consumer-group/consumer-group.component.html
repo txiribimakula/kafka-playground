@@ -2,10 +2,11 @@
     <mat-card-header>
         <mat-card-title>Consumer group {{id}} </mat-card-title>
     </mat-card-header>
-    <div class="consumers">
-        @for (consumerId of consumersByGroupId(); track $index) {
+    <mat-card-content>
+        <div class="consumers">
+            @for (consumerId of consumersByGroupId(); track $index) {
             <app-consumer @myInsertRemoveTrigger [consumerId]="consumerId"></app-consumer>
-        }
-    </div>
-    <button mat-mini-fab color="primary" (click)="addConsumer()">+</button>
+            }
+        </div>
+    </mat-card-content>
 </mat-card>

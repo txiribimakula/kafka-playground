@@ -20,11 +20,9 @@ import { animate, style, transition, trigger } from '@angular/animations';
         style({ transform: 'scale(100%, 0%)', height: 0 }),
         animate('250ms', style({ transform: 'scale(100%)', height: 100 })),
       ]),
-      transition(':leave', [
-        animate('250ms', style({ height: 0 }))
-      ])
+      transition(':leave', [animate('250ms', style({ height: 0 }))]),
     ]),
-  ]
+  ],
 })
 export class ConsumerGroupComponent {
   @Input() id!: string;
