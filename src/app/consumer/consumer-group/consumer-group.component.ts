@@ -6,7 +6,7 @@ import { TopicService } from '../../topic/topic.service';
 import { ConsumerGroupService } from './consumer-group.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { animate, query, stagger, state, style, transition, trigger } from '@angular/animations';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-consumer-group',
