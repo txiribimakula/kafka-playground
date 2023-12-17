@@ -1,1 +1,13 @@
-<p>setup works!</p>
+<mat-form-field>
+    <mat-label>Topics qty.</mat-label>
+    <input matInput type="number" [(ngModel)]="topicsQty" (ngModelChange)="topicQtyChanged($event)">
+</mat-form-field>
+
+@for (topicName of topicsNames; track $index) {
+    <mat-form-field>
+        <mat-label>Topic name</mat-label>
+        <input matInput [(ngModel)]="topicsNames[$index]">
+    </mat-form-field>
+}
+
+<button mat-raised-button color="primary" (click)="save()">Save</button>
