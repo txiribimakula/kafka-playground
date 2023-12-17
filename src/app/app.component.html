@@ -1,15 +1,2 @@
-<div class="container">
-    <div class="producers">
-        <app-producer></app-producer>
-    </div>
-    <div class="topics">
-        @for (topic of topic.topics().values(); let i = $index; track topic;) {
-            <app-topic [name]="topic.name"></app-topic>
-        }
-    </div>
-    <div class="consumer-groups">
-        @for (groupId of consumerGroup.consumerGroups(); track $index) {
-            <app-consumer-group [id]="groupId"></app-consumer-group>
-        }
-    </div>
-</div>
+
+<router-outlet></router-outlet>
