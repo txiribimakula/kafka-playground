@@ -2,9 +2,9 @@
   <mat-card-content>
     <mat-form-field>
       <mat-label>Topic</mat-label>
-      <mat-select [(ngModel)]="topic">
-        @for (topicName of ["one.topic", "two.topic"]; track topicName) {
-        <mat-option [value]="topicName">{{topicName}}</mat-option>
+      <mat-select [(ngModel)]="topicName">
+        @for (topic of topic.topics(); track $index) {
+        <mat-option [value]="topic[0]">{{topic[0]}}</mat-option>
         }
       </mat-select>
     </mat-form-field>

@@ -6,13 +6,19 @@ import { TopicService } from '../topic/topic.service';
 import { ConsumerGroupService } from '../consumer/consumer-group/consumer-group.service';
 import { filter, partition } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
+import { ConsumerFormComponent } from '../consumer/consumer-form/consumer-form.component';
 
 @Component({
   selector: 'app-kafka',
   standalone: true,
   templateUrl: './kafka.component.html',
   styleUrl: './kafka.component.scss',
-  imports: [ProducerComponent, TopicComponent, ConsumerGroupComponent],
+  imports: [
+    ProducerComponent,
+    TopicComponent,
+    ConsumerGroupComponent,
+    ConsumerFormComponent,
+  ],
 })
 export class KafkaComponent {
   constructor(

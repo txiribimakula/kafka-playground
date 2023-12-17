@@ -31,6 +31,7 @@ export class ConsumerGroupComponent {
     const consumersByGroupId: `${string}-${string}-${string}-${string}-${string}`[] =
       [];
     this.consumer.consumers().forEach((consumer, key) => {
+      console.log(consumer);
       if (consumer().groupId === this.id) {
         consumersByGroupId.push(key);
       }

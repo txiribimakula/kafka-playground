@@ -10,24 +10,6 @@ export class ConsumerService {
   >(new Map<`${string}-${string}-${string}-${string}-${string}`, Signal<Consumer>>());
 
   constructor() {
-    this.consumers.set(
-      this.consumers().set(
-        crypto.randomUUID(),
-        signal(new Consumer(['one.topic'], 'MyGroupId0'))
-      )
-    );
-    this.consumers.set(
-      this.consumers().set(
-        crypto.randomUUID(),
-        signal(new Consumer(['one.topic'], 'MyGroupId0'))
-      )
-    );
-    this.consumers.set(
-      this.consumers().set(
-        crypto.randomUUID(),
-        signal(new Consumer(['two.topic'], 'MyGroupId1'))
-      )
-    );
   }
 
   addConsumer(topics: string[], groupId: string) {

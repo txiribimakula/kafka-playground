@@ -5,20 +5,27 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
+import { TopicService } from '../topic/topic.service';
 
 @Component({
   selector: 'app-producer',
   standalone: true,
-  imports: [FormsModule, MatCardModule, MatSelectModule, MatButtonModule, MatDividerModule],
+  imports: [
+    FormsModule,
+    MatCardModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatDividerModule,
+  ],
   templateUrl: './producer.component.html',
   styleUrl: './producer.component.scss',
 })
 export class ProducerComponent {
-  topic: string = 'one.topic';
+  topicName: string = this.topic.topics().values().next().value.name;
 
-  constructor(private kafka: KafkaService) {}
+  constructor(private kafka: KafkaService, protected topic: TopicService) {}
 
   produce() {
-    this.kafka.produce(this.topic, 'message');
+    this.kafka.produce(this.topicName, 'message');
   }
 }
