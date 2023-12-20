@@ -3,11 +3,17 @@
     <input matInput type="number" [(ngModel)]="topicsQty" (ngModelChange)="topicQtyChanged($event)">
 </mat-form-field>
 
-@for (topicName of topicsNames; track $index) {
+@for (topic of topics; track $index) {
+<p>
     <mat-form-field>
         <mat-label>Topic name</mat-label>
-        <input matInput [(ngModel)]="topicsNames[$index]">
+        <input matInput [(ngModel)]="topics[$index].name">
     </mat-form-field>
+    <mat-form-field>
+        <mat-label>Partitions qty.</mat-label>
+        <input matInput [(ngModel)]="topics[$index].quantity">
+    </mat-form-field>
+</p>
 }
 
 <button mat-raised-button color="primary" (click)="save()">Save</button>

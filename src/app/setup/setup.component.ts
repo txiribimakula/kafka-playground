@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TopicService } from '../topic/topic.service';
 import { Router } from '@angular/router';
+import { Topic } from '../topic/topic';
 
 @Component({
   selector: 'app-setup',
@@ -17,21 +18,21 @@ export class SetupComponent {
   constructor(private topic: TopicService, private router: Router) {}
 
   topicsQty = 1;
-  topicsNames = [''];
+  topics = [{name: '', quantity: 1}];
 
   topicQtyChanged(value: number) {
-    if (value > this.topicsNames.length) {
-      for (let i = this.topicsNames.length; i < value; i++) {
-        this.topicsNames.push('');
+    if (value > this.topics.length) {
+      for (let i = this.topics.length; i < value; i++) {
+        this.topics.push({name: '', quantity: 1});
       }
     } else {
-      this.topicsNames = this.topicsNames.slice(0, value);
+      this.topics = this.topics.slice(0, value);
     }
   }
 
   save() {
-    this.topicsNames.forEach((name) => {
-      this.topic.addTopic(name, 1);
+    this.topics.forEach((topic) => {
+      this.topic.addTopic(topic.name, topic.quantity);
     });
     this.router.navigate(['kafka']);
   }
