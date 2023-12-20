@@ -73,6 +73,6 @@ export class ConsumerComponent {
   }
 
   async work(message: Message) {
-    await new Promise((_) => setTimeout(_, 1500));
+    await new Promise((_) => setTimeout(_, message.workTimeMs));
   }
 }

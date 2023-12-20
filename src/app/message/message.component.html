@@ -1,5 +1,6 @@
 <mat-card class="container" [ngClass]="{'committed': message.isCommitted, 'new': !message.isCommitted}">
     <mat-card-content>
         {{message.content}}
+        {{message.workTimeMs}}ms
     </mat-card-content>
 </mat-card>

@@ -9,7 +9,7 @@ export class KafkaService {
   constructor(private topic: TopicService) {}
 
   private counter = 0;
-  produce(topicName: string, msg: string) {
+  produce(topicName: string, msg: string, workTimeMs = 1500) {
     const topic = this.topic.topics().get(topicName);
     if (topic) {
       const partitionIndex = this.counter % topic.partitions().length;
@@ -20,7 +20,8 @@ export class KafkaService {
             msg,
             partition.messages().length,
             topicName,
-            partitionIndex
+            partitionIndex,
+            workTimeMs
           )
         );
         return [...values];

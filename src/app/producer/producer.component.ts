@@ -6,6 +6,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { TopicService } from '../topic/topic.service';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-producer',
@@ -16,16 +17,18 @@ import { TopicService } from '../topic/topic.service';
     MatSelectModule,
     MatButtonModule,
     MatDividerModule,
+    MatInputModule
   ],
   templateUrl: './producer.component.html',
   styleUrl: './producer.component.scss',
 })
 export class ProducerComponent {
   topicName: string = this.topic.topics().values().next().value.name;
+  workTimeMs = 1500;
 
   constructor(private kafka: KafkaService, protected topic: TopicService) {}
 
   produce() {
-    this.kafka.produce(this.topicName, 'message');
+    this.kafka.produce(this.topicName, 'message', this.workTimeMs);
   }
 }
